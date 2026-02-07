@@ -14,6 +14,8 @@ spec:
     metadata:
       labels:
         app: glance
+      annotations:
+        glance-config-revision: "3"
     spec:
       containers:
         - name: glance

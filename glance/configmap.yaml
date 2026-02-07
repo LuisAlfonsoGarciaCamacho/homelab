@@ -96,10 +96,13 @@ data:
             - type: group
               widgets:
                 - type: reddit
-                  subreddit: taquerosprogramadores
+                  subreddit: mlops
                   show-thumbnails: true
                 - type: reddit
                   subreddit: golang
+                  show-thumbnails: true
+                - type: reddit
+                  subreddit: taquerosprogramadores
                   show-thumbnails: true
                 - type: reddit
                   subreddit: rust
@@ -109,9 +112,6 @@ data:
                   show-thumbnails: true
                 - type: reddit
                   subreddit: selfhosted
-                  show-thumbnails: true
-                - type: reddit
-                  subreddit: mlops
                   show-thumbnails: true
 
         - size: small
