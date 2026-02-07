@@ -1,0 +1,295 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: glance-config
+  namespace: glance
+data:
+  glance.yml: |
+    server:
+      assets-path: /app/assets
+
+    theme:
+      background-color: 220 20 10
+      primary-color: 210 100 50
+      negative-color: 0 80 60
+      positive-color: 120 60 50
+      contrast-multiplier: 1.2
+      text-saturation-multiplier: 1.0
+      custom-css-file: /assets/user.css
+      presets:
+        dracula:
+          background-color: 231 15 18
+          primary-color: 265 89 78
+          positive-color: 135 94 65
+          negative-color: 0 100 67
+          contrast-multiplier: 1.1
+        cyberpunk:
+          background-color: 255 14 6
+          primary-color: 156 50 65
+          negative-color: 342 65 65
+          positive-color: 180 100 50
+          contrast-multiplier: 1.3
+          text-saturation-multiplier: 1.2
+
+    pages:
+      - $include: home.yml
+      - $include: chiqui.yml
+
+  home.yml: |
+    - name: Chiqui 🐻
+      columns:
+        - size: small
+          widgets:
+            - type: calendar
+              first-day-of-week: monday
+
+            - type: rss
+              limit: 10
+              collapse-after: 3
+              cache: 12h
+              feeds:
+                - url: https://selfh.st/rss/
+                  title: selfh.st
+                - url: https://ciechanow.ski/atom.xml
+                - url: https://www.joshwcomeau.com/rss.xml
+                  title: Josh Comeau
+                - url: https://samwho.dev/rss.xml
+                - url: https://ishadeed.com/feed.xml
+                  title: Ahmad Shadeed
+
+            - type: twitch-channels
+              channels:
+                - theprimeagen
+                - j_blow
+                - piratesoftware
+                - cohhcarnage
+                - christitustech
+
+        - size: full
+          widgets:
+            - type: group
+              widgets:
+                - type: hacker-news
+                - type: lobsters
+
+            - type: videos
+              channels:
+                - UCR-DXc1voovS8nhAvccRZhg # Jeff Geerling
+                - UCsBjURrPoezykLs9EqgamOA # Fireship
+                - UCobqgqE4i5Kf7wrxRxhToQA # Coffe bean AI
+                - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
+                - UCeLvlbC754U6FyFQbKc0UnQ # Anton Putra
+                - UChHd6081N_U8O4KmNawF-5A # Stoib
+                - UCbx_d228PdYwgB4Jz202SIQ # Gentleman Programming 
+                - UCSf6S_PAhXsqGMTPDiKgdRg # BettaTech
+                - UCrBzBOMcUVV8ryyAU_c6P5g # Pelado Nerd
+                - UC9x0AN7BWHpCDHSm9NiJFJQ # NetworkChuck
+                - UCdngmbVKX1Tgre699-XLlUA # TechWorld with Nana
+
+            - type: group
+              widgets:
+                - type: reddit
+                  subreddit: taquerosprogramadores
+                  show-thumbnails: true
+                - type: reddit
+                  subreddit: golang
+                  show-thumbnails: true
+                - type: reddit
+                  subreddit: rust
+                  show-thumbnails: true
+                - type: reddit
+                  subreddit: AutosMexico
+                  show-thumbnails: true
+                - type: reddit
+                  subreddit: selfhosted
+                  show-thumbnails: true
+                - type: reddit
+                  subreddit: mlops
+                  show-thumbnails: true
+
+        - size: small
+          widgets:
+            - type: weather
+              location: Monterrey, Mexico
+              units: metric
+              hour-format: 24h
+
+            - type: bookmarks
+              groups:
+                - links:
+                    - title: Gmail
+                      url: https://mail.google.com/mail/u/0/
+                    - title: Amazon
+                      url: https://www.amazon.com/
+                    - title: Github
+                      url: https://github.com/
+                    - title: Wikipedia
+                      url: https://en.wikipedia.org/
+                - title: Entertainment
+                  color: 10 70 50
+                  links:
+                    - title: Netflix
+                      url: https://www.netflix.com/
+                    - title: Disney+
+                      url: https://www.disneyplus.com/
+                    - title: YouTube
+                      url: https://www.youtube.com/
+                    - title: Prime Video
+                      url: https://www.primevideo.com/
+                - title: Social
+                  color: 200 50 50
+                  links:
+                    - title: Reddit
+                      url: https://www.reddit.com/
+                    - title: Twitter
+                      url: https://twitter.com/
+                    - title: Instagram
+                      url: https://www.instagram.com/
+
+            - type: custom-api
+              title: Steam Specials
+              cache: 12h
+              url: https://store.steampowered.com/api/featuredcategories?cc=us
+              template: |
+                <ul class="list list-gap-10 collapsible-container" data-collapse-after="5">
+                {{ range .JSON.Array "specials.items" }}
+                  <li>
+                    <a class="size-h4 color-highlight block text-truncate" href="https://store.steampowered.com/app/{{ .Int "id" }}/">{{ .String "name" }}</a>
+                    <ul class="list-horizontal-text">
+                      <li>{{ div (.Int "final_price" | toFloat) 100 | printf "$%.2f" }}</li>
+                      {{ $discount := .Int "discount_percent" }}
+                      <li{{ if ge $discount 40 }} class="color-positive"{{ end }}>{{ $discount }}% off</li>
+                    </ul>
+                  </li>
+                {{ end }}
+                </ul>
+
+  chiqui.yml: |
+    - name: Chiqui 🎀
+      columns:
+        - size: small
+          widgets:
+            - type: calendar
+              first-day-of-week: monday
+
+            - type: weather
+              location: Monterrey, Mexico
+              units: metric
+              hour-format: 24h
+
+        - size: full
+          widgets:
+            - type: group
+              widgets:
+                - type: reddit
+                  subreddit: GilmoreGirls
+                  show-thumbnails: true
+                - type: reddit
+                  subreddit: BooksThatFeelLikeThis
+                  show-thumbnails: true
+                - type: reddit
+                  subreddit: sexandthecity
+                  show-thumbnails: true
+
+            - type: videos
+              channels:
+                - UCzrr2edLbtxQjvfwxwwEmyQ # Bridgeside A
+                - UCN3FtxTrTFLni3wjRubbN4Q # Jordan Teresa
+                - UCoOss5XiPpnLHGmLrBvNkJg # Mina Le
+                - UCMFSTAyvpl_yBXmq6JPfhBQ # Emmie
+                - UCT7LVfpCsULPpBOXIoK_ACg # Jordan VoiceNotes
+                - UCZGZw2dV0107b9OTZaWCPdw # Benulus
+                - UCxRJFZ_0hr99TFgCe6CXKQA # Ashley
+                - UCboXCsBUZvek5T5cCltHS5w # Chilimika
+                - UClSVGbLF1DO6u7K3IwfPNDw # Roshana
+
+        - size: small
+          widgets:
+            - type: bookmarks
+              groups:
+                - links:
+                    - title: Gmail
+                      url: https://mail.google.com/mail/u/0/
+                    - title: Amazon
+                      url: https://www.amazon.com/
+                    - title: Github
+                      url: https://github.com/
+                    - title: Wikipedia
+                      url: https://en.wikipedia.org/
+                - title: Entertainment
+                  color: 10 70 50
+                  links:
+                    - title: Netflix
+                      url: https://www.netflix.com/
+                    - title: Disney+
+                      url: https://www.disneyplus.com/
+                    - title: YouTube
+                      url: https://www.youtube.com/
+                    - title: Prime Video
+                      url: https://www.primevideo.com/
+                - title: Social
+                  color: 200 50 50
+                  links:
+                    - title: Reddit
+                      url: https://www.reddit.com/
+                    - title: Twitter
+                      url: https://twitter.com/
+                    - title: Instagram
+                      url: https://www.instagram.com/
+
+            - type: rss
+              limit: 5
+              collapse-after: 3
+              cache: 12h
+              feeds:
+                - url: https://www.buzzfeed.com/index.xml
+                  title: BuzzFeed
+
+  user.css: |
+    /* Custom CSS for Glance - Rendon Industries Theme */
+    
+    /* Ajustes generales */
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    
+    /* Bordes redondeados en widgets */
+    .widget {
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Estilo para los títulos de widgets */
+    .widget-header {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Links con transición suave */
+    a {
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+    
+    a:hover {
+      opacity: 0.8;
+    }
+    
+    /* Scrollbar personalizada */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }

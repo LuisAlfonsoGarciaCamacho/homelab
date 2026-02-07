@@ -1,0 +1,17 @@
+# Post-start: sync Grafana admin password from Secret. Apply after helm upgrade.
+spec:
+  template:
+    spec:
+      containers:
+        - name: grafana
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - |
+                    sleep 30
+                    if [ -n "$GF_SECURITY_ADMIN_PASSWORD" ]; then
+                      grafana-cli admin reset-admin-password "$GF_SECURITY_ADMIN_PASSWORD" 2>/dev/null || true
+                    fi

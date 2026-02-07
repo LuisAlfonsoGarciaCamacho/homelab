@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- En Odoo 17, los assets se definen en el manifest -->
+    <!-- Este archivo está vacío pero se mantiene para compatibilidad -->
+</odoo>

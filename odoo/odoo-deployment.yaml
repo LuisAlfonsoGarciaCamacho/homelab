@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo
+  namespace: odoo
+  labels:
+    app: odoo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odoo
+  template:
+    metadata:
+      labels:
+        app: odoo
+    spec:
+      containers:
+      - name: odoo
+        image: odoo:17
+        ports:
+        - containerPort: 8069
+          name: http
+        - containerPort: 8072
+          name: longpolling
+        env:
+        - name: HOST
+          value: "odoo-postgres-rw.odoo.svc.cluster.local"
+        - name: USER
+          valueFrom:
+            secretKeyRef:
+              name: odoo-postgres-credentials
+              key: username
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: odoo-postgres-credentials
+              key: password
+        - name: ODOO_MASTER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: odoo-postgres-credentials
+              key: admin_passwd
+        - name: DB_NAME
+          value: "odoo"
+        - name: WITHOUT_DEMO
+          value: "all"
+        - name: FORCE_HTTPS
+          value: "true"
+        volumeMounts:
+        - name: odoo-data
+          mountPath: /var/lib/odoo
+        - name: odoo-config
+          mountPath: /etc/odoo/odoo.conf
+          subPath: odoo.conf
+        - name: odoo-logs
+          mountPath: /var/log/odoo
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
+      volumes:
+      - name: odoo-config
+        configMap:
+          name: odoo-config
+      - name: odoo-data
+        persistentVolumeClaim:
+          claimName: odoo-data-longhorn
+      - name: odoo-logs
+        persistentVolumeClaim:
+          claimName: odoo-logs-longhorn
+

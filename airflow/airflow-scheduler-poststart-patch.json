@@ -1,0 +1,17 @@
+[
+  {
+    "op": "add",
+    "path": "/spec/template/spec/containers/0/lifecycle",
+    "value": {
+      "postStart": {
+        "exec": {
+          "command": [
+            "/bin/bash",
+            "-c",
+            "sleep 45\nif [ -n \"$AIRFLOW__WEBSERVER__DEFAULT_USER_PASSWORD\" ]; then\n  airflow users reset-password -u admin -p \"$AIRFLOW__WEBSERVER__DEFAULT_USER_PASSWORD\" 2>/dev/null || true\nfi\n"
+          ]
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,31 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: jupyterhub-postgres
+  namespace: jupyterhub
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.1
+
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        preference:
+          matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - talos-u1f-wfa
+            - talos-wil-yn3
+  
+  storage:
+    size: 5Gi
+    storageClass: longhorn
+    
+  bootstrap:
+    initdb:
+      database: jupyterhub
+      owner: jupyterhub
+      secret:
+        name: jupyterhub-postgres-app

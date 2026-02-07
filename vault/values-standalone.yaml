@@ -1,0 +1,54 @@
+global:
+  enabled: true
+  tlsDisable: true
+injector:
+  enabled: false
+csi:
+  enabled: false
+
+server:
+  enabled: true
+  standalone:
+    enabled: true
+  ha:
+    enabled: false
+
+  image:
+    repository: hashicorp/vault
+    tag: "1.21.2"
+    pullPolicy: IfNotPresent
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 512Mi
+      cpu: 500m
+  readinessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+    port: 8200
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  livenessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true"
+    port: 8200
+    initialDelaySeconds: 30
+    periodSeconds: 15
+
+  dataStorage:
+    enabled: true
+    size: 10Gi
+    storageClass: longhorn
+    mountPath: "/vault/data"
+    accessMode: ReadWriteOnce
+  auditStorage:
+    enabled: false
+  affinity: {}
+ui:
+  enabled: true
+  serviceType: ClusterIP
+  externalPort: 8200
+  targetPort: 8200

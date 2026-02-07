@@ -1,0 +1,31 @@
+image:
+  repository: docker.io/jellyfin/jellyfin
+  tag: ""
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 8096
+ingress:
+  enabled: false
+persistence:
+  config:
+    enabled: true
+    existingClaim: jellyfin-config-longhorn
+  media:
+    enabled: true
+    type: pvc
+    existingClaim: jellyfin-media-longhorn
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "500m"
+  limits:
+    memory: "2Gi"
+    cpu: "2000m"
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  runAsNonRoot: true
+podSecurityContext:
+  fsGroup: 1000
+

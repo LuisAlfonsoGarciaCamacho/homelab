@@ -1,0 +1,1 @@
+[{"op": "replace", "path": "/spec/template/spec/containers/0/args", "value": ["server", "--host=0.0.0.0", "--port=5000", "--backend-store-uri=postgresql://", "--default-artifact-root=gs://mlflow-artifacts-mlops-training/", "--app-name=basic-auth", "--allowed-hosts=mlflow.rendonindustries.com,*.rendonindustries.com", "--host=0.0.0.0", "--uvicorn-opts="]}]

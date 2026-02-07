@@ -1,0 +1,23 @@
+# Post-start: reset admin password from Secret after each scheduler start. Apply after helm upgrade.
+spec:
+  template:
+    spec:
+      containers:
+        - name: scheduler
+          env:
+            - name: AIRFLOW__WEBSERVER__DEFAULT_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-app-secrets
+                  key: defaultUserPassword
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/bash
+                  - -c
+                  - |
+                    sleep 45
+                    if [ -n "$AIRFLOW__WEBSERVER__DEFAULT_USER_PASSWORD" ]; then
+                      airflow users reset-password -u admin -p "$AIRFLOW__WEBSERVER__DEFAULT_USER_PASSWORD" 2>/dev/null || true
+                    fi

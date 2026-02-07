@@ -1,0 +1,12 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: mlflow-database
+  namespace: mlflow
+spec:
+  name: mlflow
+  owner: mlflow
+  cluster:
+    name: mlflow-postgres
+  databaseReclaimPolicy: delete
+

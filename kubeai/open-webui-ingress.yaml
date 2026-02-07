@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubeai-open-webui
+  namespace: kubeai
+  annotations:
+    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+  - host: kubeai.rendonindustries.com
+    http:
+      paths:
+      - path: /openai
+        pathType: Prefix
+        backend:
+          service:
+            name: kubeai
+            port:
+              number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: open-webui
+            port:
+              number: 80

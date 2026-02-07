@@ -1,0 +1,159 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fany-html
+  namespace: default
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TE AMO FANY ❤️</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Arial', sans-serif;
+                background: linear-gradient(135deg, #ffb6c1 0%, #ffc0cb 50%, #ffb6c1 100%);
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                animation: backgroundPulse 3s ease-in-out infinite;
+            }
+            
+            @keyframes backgroundPulse {
+                0%, 100% {
+                    background: linear-gradient(135deg, #ffb6c1 0%, #ffc0cb 50%, #ffb6c1 100%);
+                }
+                50% {
+                    background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 50%, #ffc0cb 100%);
+                }
+            }
+            
+            .container {
+                text-align: center;
+                animation: fadeInScale 1s ease-out;
+            }
+            
+            @keyframes fadeInScale {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.5);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+            
+            h1 {
+                font-size: 4rem;
+                color: #fff;
+                text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+                margin-bottom: 20px;
+                animation: bounce 2s ease-in-out infinite;
+            }
+            
+            @keyframes bounce {
+                0%, 100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-20px);
+                }
+            }
+            
+            .heart {
+                font-size: 5rem;
+                color: #ff0000;
+                animation: heartbeat 1.5s ease-in-out infinite;
+                display: inline-block;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            
+            @keyframes heartbeat {
+                0%, 100% {
+                    transform: scale(1);
+                }
+                25% {
+                    transform: scale(1.2);
+                }
+                50% {
+                    transform: scale(1);
+                }
+                75% {
+                    transform: scale(1.15);
+                }
+            }
+            
+            .sparkles {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+            }
+            
+            .sparkle {
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                background: #fff;
+                border-radius: 50%;
+                animation: sparkle 3s ease-in-out infinite;
+            }
+            
+            @keyframes sparkle {
+                0%, 100% {
+                    opacity: 0;
+                    transform: translateY(0) scale(0);
+                }
+                50% {
+                    opacity: 1;
+                    transform: translateY(-100px) scale(1);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="sparkles" id="sparkles"></div>
+        <div class="container">
+            <h1>TE AMO FANY</h1>
+            <div class="heart">❤️</div>
+        </div>
+        <script>
+            // Crear partículas de brillo
+            function createSparkle() {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                sparkle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.getElementById('sparkles').appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 5000);
+            }
+            
+            // Crear partículas cada 300ms
+            setInterval(createSparkle, 300);
+            
+            // Crear algunas partículas iniciales
+            for (let i = 0; i < 20; i++) {
+                setTimeout(createSparkle, i * 100);
+            }
+        </script>
+    </body>
+    </html>
+

@@ -1,0 +1,254 @@
+/* Estilos para impresoras térmicas de 64mm - Aplicados globalmente */
+/* Ancho efectivo de impresión: 64mm (ancho completo de la impresora) */
+/* ESTILO PARA IMPRESORA 64MM - POS RECEIPT 58MM MODULE */
+
+/* Estilos base para pantalla (vista previa) */
+.pos-receipt,
+body.pos-receipt,
+[class*="pos-receipt"],
+div.pos-receipt,
+.receipt-screen .pos-receipt {
+    width: 64mm !important;
+    max-width: 64mm !important;
+    margin: 0 auto !important;
+    margin-right: 0 !important;
+    padding: 1mm 0 1mm 1mm !important;
+    font-size: 13pt !important;
+    line-height: 1.2 !important;
+    font-family: 'Courier New', 'Courier', monospace !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+/* Ocultar tabla de impuestos también en vista previa */
+.pos-receipt .pos-receipt-taxes,
+.pos-receipt table[class*="tax"],
+.pos-receipt .taxes,
+.pos-receipt [class*="tax-table"],
+.pos-receipt [class*="tax-detail"] {
+    display: none !important;
+}
+
+@media print {
+    @page {
+        size: 64mm auto;
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Aplicar estilos solo a tickets del POS - Máxima especificidad para sobrescribir estilos de Odoo */
+    .render-container .pos-receipt,
+    .render-container body.pos-receipt,
+    .render-container body .pos-receipt,
+    .render-container [class*="pos-receipt"],
+    .render-container div.pos-receipt,
+    .receipt-screen .pos-receipt,
+    html body .pos-receipt,
+    .pos-receipt,
+    body.pos-receipt,
+    body .pos-receipt,
+    [class*="pos-receipt"],
+    div.pos-receipt {
+        width: 64mm !important;
+        max-width: 64mm !important;
+        margin: 0 !important;
+        margin-right: 0 !important;
+        padding: 1mm 0 1mm 1mm !important;
+        font-size: 13pt !important;
+        line-height: 1.2 !important;
+        font-family: 'Courier New', 'Courier', monospace !important;
+        font-weight: bold !important;
+        color: #000 !important;
+        background: #fff !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+    }
+    
+    /* Contenedor principal del ticket - Mayor especificidad */
+    .pos-receipt *,
+    body.pos-receipt *,
+    body .pos-receipt *,
+    [class*="pos-receipt"] * {
+        max-width: 64mm !important;
+        box-sizing: border-box !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        font-weight: bold !important;
+        padding-right: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* Tablas optimizadas para 64mm - Mayor especificidad */
+    .pos-receipt table,
+    body.pos-receipt table,
+    body .pos-receipt table,
+    .pos-receipt .orderlines,
+    body.pos-receipt .orderlines {
+        width: 100% !important;
+        max-width: 64mm !important;
+        font-size: 13pt !important;
+        border-collapse: collapse !important;
+        margin: 0 !important;
+        margin-right: 0 !important;
+        padding-right: 0 !important;
+        border-spacing: 0 !important;
+    }
+    
+    .pos-receipt td,
+    .pos-receipt th,
+    body.pos-receipt td,
+    body.pos-receipt th,
+    body .pos-receipt td,
+    body .pos-receipt th {
+        padding: 0.5mm 0 0.5mm 0.3mm !important;
+        margin-right: 0 !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        white-space: normal !important;
+    }
+    
+    /* Todas las columnas sin padding derecho */
+    .pos-receipt td,
+    .pos-receipt th,
+    body.pos-receipt td,
+    body.pos-receipt th,
+    body .pos-receipt td,
+    body .pos-receipt th {
+        padding-right: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* Títulos centrados y ajustados */
+    .pos-receipt h1,
+    .pos-receipt h2,
+    .pos-receipt h3,
+    .pos-receipt h4 {
+        font-size: 14pt !important;
+        text-align: center !important;
+        margin: 0.5mm 0 !important;
+        word-wrap: break-word !important;
+    }
+    
+    /* Evitar saltos de página */
+    .pos-receipt .orderline,
+    .pos-receipt tr {
+        page-break-inside: avoid !important;
+    }
+    
+    /* Asegurar que los textos largos se ajusten */
+    .pos-receipt .text-wrap,
+    .pos-receipt p,
+    .pos-receipt span,
+    .pos-receipt div {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        white-space: normal !important;
+        padding-right: 0 !important;
+        margin-right: 0 !important;
+        max-width: 100% !important;
+    }
+    
+    /* Optimizar columnas de productos */
+    .pos-receipt .product-name {
+        max-width: 60% !important;
+        word-wrap: break-word !important;
+        padding-right: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    .pos-receipt .product-qty {
+        max-width: 15% !important;
+        text-align: center !important;
+        padding-right: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    .pos-receipt .product-price {
+        max-width: 25% !important;
+        text-align: right !important;
+        padding-right: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* Totales destacados */
+    .pos-receipt .total-line,
+    .pos-receipt .subtotal-line,
+    .pos-receipt .pos-receipt-amount {
+        font-weight: bold !important;
+        font-size: 13pt !important;
+        border-top: 1px solid #000 !important;
+        padding-top: 0.5mm !important;
+        margin-top: 0.5mm !important;
+    }
+    
+    /* Información de la empresa - Mayor especificidad */
+    .pos-receipt .company-info,
+    body.pos-receipt .company-info,
+    .pos-receipt [class*="header"],
+    body.pos-receipt [class*="header"],
+    .pos-receipt-logo,
+    .pos-receipt-contact,
+    .pos-receipt-order-data {
+        width: 100% !important;
+        max-width: 64mm !important;
+        text-align: center !important;
+        margin-bottom: 0.5mm !important;
+        margin-top: 0.5mm !important;
+        margin-right: 0 !important;
+        padding-right: 0 !important;
+        font-size: 13pt !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Forzar que el render-container no tenga márgenes */
+    .render-container {
+        margin-right: 0 !important;
+        padding-right: 0 !important;
+        width: 64mm !important;
+        max-width: 64mm !important;
+    }
+    
+    /* Separadores */
+    .pos-receipt hr {
+        border: none !important;
+        border-top: 1px dashed #000 !important;
+        margin: 0.5mm 0 !important;
+    }
+    
+    /* Ajustar imágenes/logos */
+    .pos-receipt img {
+        max-width: 40mm !important;
+        height: auto !important;
+    }
+    
+    /* Footer del ticket */
+    .pos-receipt-footer {
+        margin-top: 0.5mm !important;
+        padding-top: 0.5mm !important;
+        border-top: 1px dashed #000 !important;
+        text-align: center !important;
+        font-size: 13pt !important;
+    }
+    
+    /* Asegurar que todos los textos pequeños sean más legibles */
+    .pos-receipt small,
+    .pos-receipt .small,
+    .pos-receipt span,
+    .pos-receipt p,
+    .pos-receipt div {
+        font-size: 13pt !important;
+    }
+    
+    /* Ocultar tabla de impuestos (Impuesto, Importe, Base, Total) */
+    .pos-receipt .pos-receipt-taxes,
+    .pos-receipt table[class*="tax"],
+    .pos-receipt .taxes,
+    .pos-receipt [class*="tax-table"],
+    .pos-receipt [class*="tax-detail"] {
+        display: none !important;
+    }
+}
+

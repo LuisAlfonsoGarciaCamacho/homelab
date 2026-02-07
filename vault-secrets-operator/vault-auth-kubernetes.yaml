@@ -1,0 +1,20 @@
+# VaultAuth Kubernetes. Prereqs: enable kubernetes auth in Vault, create policy + role; see VAULT-SECRETS-SETUP.md
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  name: vault-auth-kubernetes
+  namespace: vault-secrets-operator
+spec:
+  vaultConnectionRef: vault
+  method: kubernetes
+  mount: kubernetes
+  kubernetes:
+    role: vso-secrets-reader
+    serviceAccount: default
+  allowedNamespaces:
+    - mlflow
+    - airflow
+    - jupyterhub
+    - odoo
+    - monitoring
+    - glance

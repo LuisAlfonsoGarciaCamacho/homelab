@@ -1,0 +1,19 @@
+apiVersion: kubeai.org/v1
+kind: Model
+metadata:
+  name: qwen2-1.5b-instruct
+  namespace: kubeai
+spec:
+  engine: VLLM
+  features:
+    - TextGeneration
+  url: hf://Qwen/Qwen2-1.5B-Instruct
+  cacheProfile: longhorn-cache
+  image: vllm/vllm-openai:v0.10.2
+  minReplicas: 1
+  maxReplicas: 1
+  resourceProfile: "nvidia-gpu-a16:1"
+  args:
+    - --max-model-len=2048
+    - --gpu-memory-utilization=0.4
+    - --max-num-seqs=16

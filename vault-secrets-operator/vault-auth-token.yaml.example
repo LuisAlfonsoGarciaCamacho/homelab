@@ -1,0 +1,23 @@
+# Alternative: VaultAuth using AppRole (static credentials in a Secret).
+# 1. In Vault: enable approle, create a policy, create an approle role with that policy.
+# 2. Get role_id and secret_id, then create a K8s Secret in vault-secrets-operator:
+#      kubectl create secret generic vault-approle -n vault-secrets-operator \
+#        --from-literal=role_id=YOUR_ROLE_ID \
+#        --from-literal=id=YOUR_SECRET_ID
+# 3. Rename this file to vault-auth-token.yaml (or vault-auth-approle.yaml), uncomment and apply.
+# 4. Reference this VaultAuth from VaultStaticSecret (vaultAuthRef and namespace).
+#
+# apiVersion: secrets.hashicorp.com/v1beta1
+# kind: VaultAuth
+# metadata:
+#   name: vault-auth-approle
+#   namespace: vault-secrets-operator
+# spec:
+#   vaultConnectionRef: vault
+#   method: appRole
+#   mount: approle
+#   appRole:
+#     roleId: ""  # or from secret
+#     secretRef: vault-approle
+#   allowedNamespaces:
+#     - mlflow

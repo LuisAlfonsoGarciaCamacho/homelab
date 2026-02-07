@@ -1,0 +1,36 @@
+# Local overrides with real secrets (do not commit)
+*-local.yaml
+values-*.local.yaml
+*.secret.yaml
+.env
+.env.*
+!*.example
+secrets/
+*.tfstate
+*.tfstate.*
+.terraform/
+*.pem
+*.key
+kubeconfig
+talosconfig
+kubeconfig.*
+
+# Talos cluster config (machine configs, patches, backups) - do not push
+talos-cluster/
+
+# No push: ejemplos locales y config GPU específica del cluster
+model_example/
+nvidia/
+mlflow_bucket/
+
+# Python venv
+.venv/
+venv/
+__pycache__/
+
+# Optional: keep credentials out of repo
+INVENTARIO-CREDENCIALES.local.md
+
+# Odoo: Secret comes from Vault (VaultStaticSecret); do not commit a static credentials file
+odoo/postgresql-credentials.yaml
+INVENTARIO.md

@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: odoo
+  namespace: odoo
+  annotations:
+    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
+    cloudflare-tunnel-ingress-controller.strrl.dev/http-host-header: odoo.rendonindustries.com
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+  - host: odoo.rendonindustries.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo
+            port:
+              number: 8069
+

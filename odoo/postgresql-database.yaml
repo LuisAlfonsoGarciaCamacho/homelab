@@ -1,0 +1,12 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: odoo-database
+  namespace: odoo
+spec:
+  name: odoo
+  owner: odoo
+  cluster:
+    name: odoo-postgres
+  databaseReclaimPolicy: delete
+

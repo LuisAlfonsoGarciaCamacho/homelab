@@ -1,0 +1,38 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: mlflow-postgres
+  namespace: mlflow
+spec:
+  instances: 1
+  postgresql:
+    parameters:
+      max_connections: "50"
+      shared_buffers: "64MB"
+      effective_cache_size: "256MB"
+      maintenance_work_mem: "16MB"
+      checkpoint_completion_target: "0.9"
+      wal_buffers: "8MB"
+      default_statistics_target: "100"
+      random_page_cost: "1.1"
+      effective_io_concurrency: "200"
+      work_mem: "4MB"
+      min_wal_size: "512MB"
+      max_wal_size: "2GB"
+  storage:
+    size: 5Gi
+    storageClass: longhorn
+  bootstrap:
+    initdb:
+      database: mlflow
+      owner: mlflow
+      secret:
+        name: mlflow-postgres-credentials
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "1000m"
+

@@ -1,0 +1,19 @@
+apiVersion: kubeai.org/v1
+kind: Model
+metadata:
+  name: mistral-7b-flashcards
+  namespace: kubeai
+spec:
+  engine: VLLM
+  features:
+    - TextGeneration
+  url: hf://TrabbyPatty/mistral-7b-instruct-finetuned-flashcards-4bit
+  cacheProfile: longhorn-cache
+  image: vllm/vllm-openai:v0.10.2
+  minReplicas: 1
+  maxReplicas: 1
+  resourceProfile: "nvidia-gpu-a16:1"
+  args:
+    - --max-model-len=2048
+    - --gpu-memory-utilization=0.7
+    - --max-num-seqs=16

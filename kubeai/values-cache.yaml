@@ -1,0 +1,4 @@
+cacheProfiles:
+  longhorn-cache:
+    sharedFilesystem:
+      storageClassName: "longhorn-rwx"
