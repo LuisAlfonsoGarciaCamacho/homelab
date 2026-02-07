@@ -23,6 +23,9 @@ model_example/
 nvidia/
 mlflow_bucket/
 
+# Editor / IDE (local settings)
+.vscode/
+
 # Python venv
 .venv/
 venv/
