@@ -31,6 +31,11 @@ mlflow_bucket/
 venv/
 __pycache__/
 
+argocd/.deploy-key
+argocd/.deploy-key.pub
+.vault-payload.json
+argocd/README.md
+
 # Optional: keep credentials out of repo
 INVENTARIO-CREDENCIALES.local.md
 

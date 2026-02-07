@@ -1,20 +1,20 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: glance-ingress
-  namespace: glance
+  name: argocd-server
+  namespace: argocd
   annotations:
-    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
+    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: https
 spec:
   ingressClassName: cloudflare-tunnel
   rules:
-    - host: glance.rendonindustries.com
+    - host: argocd.rendonindustries.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: glance
+                name: argocd-server
                 port:
-                  number: 80
+                  number: 443
