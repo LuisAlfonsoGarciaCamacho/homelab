@@ -12,6 +12,26 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: odoo
+  ignoreDifferences:
+    - group: postgresql.cnpg.io
+      kind: Cluster
+      jsonPointers:
+        - /status
+        - /spec
+    - group: postgresql.cnpg.io
+      kind: Cluster
+      jqPathExpressions:
+        - .metadata.resourceVersion
+        - .metadata.managedFields
+    - group: postgresql.cnpg.io
+      kind: Database
+      jsonPointers:
+        - /status
+    - group: postgresql.cnpg.io
+      kind: Database
+      jqPathExpressions:
+        - .metadata.resourceVersion
+        - .metadata.managedFields
   syncPolicy:
     automated:
       prune: true
