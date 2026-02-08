@@ -13,8 +13,8 @@ spec:
       targetRevision: main
       path: monitoring/helm-values
       ref: values
-    - repoURL: https://prometheus-community.github.io/helm-charts
-      chart: kube-prometheus-stack
+    - repoURL: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
+      path: .
       targetRevision: "67.2.0"
       helm:
         valueFiles:
