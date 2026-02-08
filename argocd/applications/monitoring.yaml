@@ -13,6 +13,7 @@ spec:
       targetRevision: main
       path: monitoring
       helm:
+        skipCrds: true
         valueFiles:
           - values.yaml
   destination:
