@@ -10,7 +10,13 @@ airflow:
   executor: KubernetesExecutor
   postgresql:
     enabled: false
+  enableBuiltInSecretEnvVars:
+    AIRFLOW__CORE__FERNET_KEY: false
+    AIRFLOW__API_AUTH__JWT_SECRET: false
+    AIRFLOW__API__SECRET_KEY: false
+    AIRFLOW__WEBSERVER__SECRET_KEY: false
   images:
+    migrationsWaitTimeout: 120
     airflow:
       repository: apache/airflow
       tag: "3.0.2"
