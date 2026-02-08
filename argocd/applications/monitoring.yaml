@@ -11,14 +11,10 @@ spec:
       path: monitoring/infra
     - repoURL: git@github.com:LuisAlfonsoGarciaCamacho/homelab.git
       targetRevision: main
-      path: monitoring/helm-values
-      ref: values
-    - repoURL: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
-      path: .
-      targetRevision: "67.2.0"
+      path: monitoring
       helm:
         valueFiles:
-          - $values/values.yaml
+          - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
