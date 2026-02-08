@@ -2,6 +2,8 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: longhorn-rwx
+  annotations:
+    argocd.argoproj.io/sync-wave: "-4"
 provisioner: driver.longhorn.io
 allowVolumeExpansion: true
 reclaimPolicy: Delete

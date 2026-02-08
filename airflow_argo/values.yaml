@@ -29,7 +29,7 @@ airflow:
   dags:
     persistence:
       enabled: true
-      existingClaim: airflow-argo-dags-longhorn
+      existingClaim: airflow-argo-dags-rwx
   service:
     type: ClusterIP
     ports:
@@ -85,6 +85,7 @@ airflow:
         cpu: 1000m
   triggerer:
     enabled: true
+    replicas: 1
     persistence:
       enabled: false
     resources:
