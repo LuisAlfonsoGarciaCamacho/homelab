@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: airflow-dags-sync
+  namespace: airflow
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  ttlSecondsAfterFinished: 300
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: sync
+          image: alpine/git:latest
+          command:
+            - sh
+            - -c
+            - |
+              chmod 600 /etc/git-secret/ssh
+              export GIT_SSH_COMMAND="ssh -i /etc/git-secret/ssh -o StrictHostKeyChecking=no"
+              git clone -b main --depth 1 git@github.com:LuisAlfonsoGarciaCamacho/homelab.git /tmp/repo
+              cp -r /tmp/repo/airflow/dags/. /dags/
+          volumeMounts:
+            - name: dags
+              mountPath: /dags
+            - name: git-secret
+              mountPath: /etc/git-secret
+              readOnly: true
+      volumes:
+        - name: dags
+          persistentVolumeClaim:
+            claimName: airflow-dags-rwx
+        - name: git-secret
+          secret:
+            secretName: airflow-dags-repo-ssh
+            items:
+              - key: ssh
+                path: ssh
+            defaultMode: 0400
