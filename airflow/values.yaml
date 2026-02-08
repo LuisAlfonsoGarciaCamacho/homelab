@@ -52,6 +52,9 @@ airflow:
     - envName: AIRFLOW__WEBSERVER__DEFAULT_USER_PASSWORD
       secretName: airflow-app-secrets
       secretKey: defaultUserPassword
+    - envName: AIRFLOW__WEBSERVER__SECRET_KEY
+      secretName: airflow-app-secrets
+      secretKey: webserver-secret-key
   webserverSecretKeySecretName: airflow-app-secrets
   data:
     metadataSecretName: airflow-postgres-app
