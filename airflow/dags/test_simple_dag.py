@@ -6,7 +6,7 @@ from datetime import datetime
 def test_simple_dag():
     @task
     def get_value():
-        return "hello"
+        return "hello more complex"
 
     @task
     def print_value(msg: str):
