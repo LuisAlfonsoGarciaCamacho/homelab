@@ -20,8 +20,8 @@ spec:
             - sh
             - -c
             - |
-              chmod 600 /etc/git-secret/ssh
-              export GIT_SSH_COMMAND="ssh -i /etc/git-secret/ssh -o StrictHostKeyChecking=no"
+              cp /etc/git-secret/ssh /tmp/ssh_key && chmod 600 /tmp/ssh_key
+              export GIT_SSH_COMMAND="ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no"
               git clone -b main --depth 1 git@github.com:LuisAlfonsoGarciaCamacho/homelab.git /tmp/repo
               cp -r /tmp/repo/airflow/dags/. /dags/
           volumeMounts:
