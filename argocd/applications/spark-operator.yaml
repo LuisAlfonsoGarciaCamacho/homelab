@@ -28,6 +28,18 @@ spec:
       jqPathExpressions:
         - .metadata.resourceVersion
         - .metadata.managedFields
+    - group: apps
+      kind: DaemonSet
+      jsonPointers:
+        - /status
+    - group: apps
+      kind: StatefulSet
+      jsonPointers:
+        - /status
+    - group: batch
+      kind: Job
+      jsonPointers:
+        - /status
     - group: ""
       kind: Service
       jqPathExpressions:
@@ -39,7 +51,36 @@ spec:
       jqPathExpressions:
         - .metadata.resourceVersion
         - .metadata.managedFields
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      jqPathExpressions:
+        - .webhooks[].clientConfig.caBundle
+        - .metadata.resourceVersion
+        - .metadata.managedFields
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      jqPathExpressions:
+        - .webhooks[].clientConfig.caBundle
+        - .metadata.resourceVersion
+        - .metadata.managedFields
+    - group: networking.k8s.io
+      kind: Ingress
+      jqPathExpressions:
+        - .metadata.resourceVersion
+        - .metadata.managedFields
+        - .status
+    - group: ""
+      kind: ConfigMap
+      jqPathExpressions:
+        - .metadata.resourceVersion
+        - .metadata.managedFields
+    - group: ""
+      kind: ServiceAccount
+      jqPathExpressions:
+        - .metadata.resourceVersion
+        - .metadata.managedFields
+        - .secrets
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    # Sin automated para evitar sync colgado; sincronizar manualmente desde la UI
