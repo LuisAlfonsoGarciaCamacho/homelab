@@ -10,6 +10,9 @@ airflow:
   executor: KubernetesExecutor
   postgresql:
     enabled: false
+  fernetKeySecretName: airflow-argo-app-secrets
+  jwtSecretName: airflow-argo-app-secrets
+  apiSecretKeySecretName: airflow-argo-app-secrets
   enableBuiltInSecretEnvVars:
     AIRFLOW__CORE__FERNET_KEY: false
     AIRFLOW__API_AUTH__JWT_SECRET: false

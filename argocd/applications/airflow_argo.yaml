@@ -29,6 +29,23 @@ spec:
       jqPathExpressions:
         - .metadata.resourceVersion
         - .metadata.managedFields
+    - group: batch
+      kind: Job
+      jsonPointers:
+        - /spec/selector
+        - /spec/template
+    - kind: Secret
+      name: airflow-argo-fernet-key
+      jqPathExpressions:
+        - .data
+    - kind: Secret
+      name: airflow-argo-jwt-secret
+      jqPathExpressions:
+        - .data
+    - kind: Secret
+      name: airflow-argo-api-secret-key
+      jqPathExpressions:
+        - .data
   syncPolicy:
     automated:
       prune: true
