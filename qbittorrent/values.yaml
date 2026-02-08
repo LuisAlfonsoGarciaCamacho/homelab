@@ -1,46 +1,54 @@
-image:
-  repository: ghcr.io/linuxserver/qbittorrent
-  tag: version-5.0.3-r0
-  pullPolicy: IfNotPresent
-env:
-  TZ: "UTC"
-dnsConfig:
-  nameservers:
-    - 8.8.8.8
-    - 1.1.1.1
-  options:
-    - name: ndots
-      value: "2"
-    - name: edns0
-
-dnsPolicy: "None"
-service:
-  main:
-    ports:
-      http:
-        port: 8080
-  bittorrent:
-    enabled: true
-    ports:
-      bittorrent:
-        enabled: true
-        port: 6881
-        protocol: TCP
-ingress:
-  main:
-    enabled: false
-persistence:
-  config:
-    enabled: true
-    existingClaim: qbittorrent-config-longhorn
-  downloads:
-    enabled: true
-    existingClaim: jellyfin-media-longhorn
-    mountPath: /downloads
-resources:
-  requests:
-    memory: "128Mi"
-    cpu: "100m"
-  limits:
-    memory: "512Mi"
-    cpu: "500m"
+qbittorrent:
+  image:
+    repository: ghcr.io/linuxserver/qbittorrent
+    tag: version-5.0.3-r0
+    pullPolicy: IfNotPresent
+  env:
+    TZ: "UTC"
+  dnsConfig:
+    nameservers:
+      - 8.8.8.8
+      - 1.1.1.1
+    options:
+      - name: ndots
+        value: "2"
+      - name: edns0
+  dnsPolicy: "None"
+  service:
+    main:
+      ports:
+        http:
+          port: 8080
+    bittorrent:
+      enabled: true
+      ports:
+        bittorrent:
+          enabled: true
+          port: 6881
+          protocol: TCP
+  ingress:
+    main:
+      enabled: true
+      className: cloudflare-tunnel
+      annotations:
+        cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
+      hosts:
+        - host: qbittorrent.rendonindustries.com
+          paths:
+            - path: /
+              pathType: Prefix
+  persistence:
+    config:
+      enabled: true
+      existingClaim: qbittorrent-config-longhorn
+    downloads:
+      enabled: true
+      existingClaim: jellyfin-media-longhorn
+      mountPath: /downloads
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"

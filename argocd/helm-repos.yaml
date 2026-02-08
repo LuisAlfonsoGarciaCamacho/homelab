@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helm-jellyfin
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: helm
+  name: jellyfin-helm
+  url: https://jellyfin.github.io/jellyfin-helm
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helm-gabe565
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: helm
+  name: gabe565
+  url: https://charts.gabe565.com

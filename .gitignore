@@ -45,3 +45,7 @@ INVENTARIO-CREDENCIALES.local.md
 # Odoo: Secret comes from Vault (VaultStaticSecret); do not commit a static credentials file
 odoo/postgresql-credentials.yaml
 INVENTARIO.md
+
+# Helm dependency build artifacts (Argo CD fetches deps from registered repos)
+jellyfin/charts/
+qbittorrent/charts/

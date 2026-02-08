@@ -1,0 +1,9 @@
+apiVersion: v2
+name: qbittorrent-homelab
+description: qBittorrent via gabe565 chart (dependency)
+type: application
+version: 0.1.0
+dependencies:
+  - name: qbittorrent
+    repository: https://charts.gabe565.com
+    version: "0.4.1"
