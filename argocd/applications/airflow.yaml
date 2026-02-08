@@ -29,6 +29,18 @@ spec:
       jqPathExpressions:
         - .metadata.resourceVersion
         - .metadata.managedFields
+    - group: apps
+      kind: Deployment
+      jqPathExpressions:
+        - .spec.template.spec.containers[].env
+    - group: apps
+      kind: StatefulSet
+      jqPathExpressions:
+        - .spec.template.spec.containers[].env
+    - group: batch
+      kind: Job
+      jqPathExpressions:
+        - .spec.template.spec.containers[].env
   syncPolicy:
     automated:
       prune: true
