@@ -49,18 +49,6 @@ stringData:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: helm-apache-airflow
-  namespace: argocd
-  labels:
-    argocd.argoproj.io/secret-type: repository
-stringData:
-  type: helm
-  name: apache-airflow
-  url: https://airflow.apache.org
----
-apiVersion: v1
-kind: Secret
-metadata:
   name: helm-prometheus-community
   namespace: argocd
   labels:
