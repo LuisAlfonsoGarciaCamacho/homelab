@@ -60,10 +60,7 @@ jupyterhub:
       cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
       kubernetes.io/ingress.class: cloudflare-tunnel
     hosts:
-      - host: jupyter.rendonindustries.com
-        paths:
-          - path: /
-            pathType: Prefix
+      - jupyter.rendonindustries.com
 
   prePuller:
     hook:
