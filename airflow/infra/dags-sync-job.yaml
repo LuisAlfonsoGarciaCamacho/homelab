@@ -26,6 +26,8 @@ spec:
               export GIT_SSH_COMMAND="ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no"
               echo "Cloning repo..."
               git clone -b main --depth 1 git@github.com:LuisAlfonsoGarciaCamacho/homelab.git /tmp/repo
+              echo "Cleaning /dags..."
+              find /dags -mindepth 1 -delete
               echo "Copying dags..."
               mkdir -p /dags
               cp -rv /tmp/repo/airflow/dags/. /dags/
