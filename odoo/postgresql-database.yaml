@@ -3,6 +3,8 @@ kind: Database
 metadata:
   name: odoo-database
   namespace: odoo
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   name: odoo
   owner: odoo

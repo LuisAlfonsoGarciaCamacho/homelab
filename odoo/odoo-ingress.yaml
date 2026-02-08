@@ -4,6 +4,7 @@ metadata:
   name: odoo
   namespace: odoo
   annotations:
+    argocd.argoproj.io/sync-wave: "2"
     cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
     cloudflare-tunnel-ingress-controller.strrl.dev/http-host-header: odoo.rendonindustries.com
 spec:

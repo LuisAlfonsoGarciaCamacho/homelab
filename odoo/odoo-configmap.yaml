@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: odoo-config
   namespace: odoo
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 data:
   odoo.conf: |
     [options]

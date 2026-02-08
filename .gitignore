@@ -23,6 +23,9 @@ model_example/
 nvidia/
 mlflow_bucket/
 
+# Cursor rules (local only, do not sync with repo)
+.cursor/
+
 # Editor / IDE (local settings)
 .vscode/
 

@@ -5,6 +5,8 @@ metadata:
   namespace: odoo
   labels:
     app: odoo
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   type: ClusterIP
   ports:

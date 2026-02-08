@@ -6,7 +6,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -15,18 +15,6 @@ spec:
       labels:
         app: nginx
     spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - nginx
-              topologyKey: kubernetes.io/hostname
       containers:
       - name: nginx
         image: nginx:latest
@@ -47,4 +35,3 @@ spec:
       - name: html-content
         configMap:
           name: fany-html
-

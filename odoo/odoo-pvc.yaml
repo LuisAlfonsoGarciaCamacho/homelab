@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: odoo-data-longhorn
   namespace: odoo
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -16,6 +18,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: odoo-logs-longhorn
   namespace: odoo
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   accessModes:
     - ReadWriteOnce
