@@ -8,6 +8,7 @@ metadata:
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
     argocd.argoproj.io/sync-wave: "1"
 spec:
+  activeDeadlineSeconds: 120
   ttlSecondsAfterFinished: 300
   backoffLimit: 2
   template:
@@ -20,10 +21,16 @@ spec:
             - sh
             - -c
             - |
+              set -e
               cp /etc/git-secret/ssh /tmp/ssh_key && chmod 600 /tmp/ssh_key
               export GIT_SSH_COMMAND="ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no"
+              echo "Cloning repo..."
               git clone -b main --depth 1 git@github.com:LuisAlfonsoGarciaCamacho/homelab.git /tmp/repo
-              cp -r /tmp/repo/airflow/dags/. /dags/
+              echo "Copying dags..."
+              mkdir -p /dags
+              cp -rv /tmp/repo/airflow/dags/. /dags/
+              echo "Done. Contents of /dags:"
+              ls -la /dags
           volumeMounts:
             - name: dags
               mountPath: /dags
