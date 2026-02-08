@@ -42,6 +42,8 @@ spec:
       jqPathExpressions:
         - .spec.template.spec.containers[].env
   syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
     automated:
       prune: true
       selfHeal: true
