@@ -1,0 +1,9 @@
+apiVersion: v2
+name: airflow-argo-homelab
+description: Airflow 3.x via official Apache chart (dependency)
+type: application
+version: 0.1.0
+dependencies:
+  - name: airflow
+    repository: https://airflow.apache.org
+    version: "1.18.0"

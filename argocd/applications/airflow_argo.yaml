@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: airflow-argo
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: git@github.com:LuisAlfonsoGarciaCamacho/homelab.git
+      targetRevision: main
+      path: airflow_argo/infra
+    - repoURL: git@github.com:LuisAlfonsoGarciaCamacho/homelab.git
+      targetRevision: main
+      path: airflow_argo
+      helm:
+        valueFiles:
+          - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: airflow-argo
+  ignoreDifferences:
+    - group: postgresql.cnpg.io
+      kind: Cluster
+      jsonPointers:
+        - /status
+        - /spec
+    - group: postgresql.cnpg.io
+      kind: Cluster
+      jqPathExpressions:
+        - .metadata.resourceVersion
+        - .metadata.managedFields
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

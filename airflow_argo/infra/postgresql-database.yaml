@@ -1,0 +1,13 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: airflow-argo-database
+  namespace: airflow-argo
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  name: airflow
+  owner: airflow
+  cluster:
+    name: airflow-argo-postgres
+  databaseReclaimPolicy: delete

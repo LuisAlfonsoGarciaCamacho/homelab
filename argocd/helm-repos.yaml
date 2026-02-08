@@ -81,3 +81,15 @@ stringData:
   type: helm
   name: spark-operator
   url: https://kubeflow.github.io/spark-operator
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helm-apache-airflow
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: helm
+  name: apache-airflow
+  url: https://airflow.apache.org
