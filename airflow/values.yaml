@@ -10,23 +10,26 @@ airflow:
   executor: KubernetesExecutor
   postgresql:
     enabled: false
+  fernetKeySecretName: airflow-app-secrets
+  jwtSecretName: airflow-app-secrets
+  apiSecretKeySecretName: airflow-app-secrets
+  enableBuiltInSecretEnvVars:
+    AIRFLOW__CORE__FERNET_KEY: false
+    AIRFLOW__API_AUTH__JWT_SECRET: false
+    AIRFLOW__API__SECRET_KEY: false
+    AIRFLOW__WEBSERVER__SECRET_KEY: false
   images:
+    migrationsWaitTimeout: 120
     airflow:
       repository: apache/airflow
       tag: "3.0.2"
       pullPolicy: IfNotPresent
   defaultAirflowTag: "3.0.2"
   defaultAirflowRepository: apache/airflow
-  nodeSelector:
-    kubernetes.io/hostname: talos-wil-yn3
-  volumes:
-    - name: dags
-      persistentVolumeClaim:
-        claimName: airflow-dags-longhorn
-  volumeMounts:
-    - name: dags
-      mountPath: /opt/airflow/dags
-      readOnly: false
+  dags:
+    persistence:
+      enabled: true
+      existingClaim: airflow-dags-rwx
   service:
     type: ClusterIP
     ports:
@@ -49,6 +52,7 @@ airflow:
     - envName: AIRFLOW__WEBSERVER__DEFAULT_USER_PASSWORD
       secretName: airflow-app-secrets
       secretKey: defaultUserPassword
+  webserverSecretKeySecretName: airflow-app-secrets
   data:
     metadataSecretName: airflow-postgres-app
     resultBackendSecretName: airflow-postgres-app
@@ -81,6 +85,7 @@ airflow:
         cpu: 1000m
   triggerer:
     enabled: true
+    replicas: 1
     persistence:
       enabled: false
     resources:

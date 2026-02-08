@@ -1,23 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: airflow-argo
+  name: airflow
   namespace: argocd
 spec:
   project: default
   sources:
     - repoURL: git@github.com:LuisAlfonsoGarciaCamacho/homelab.git
       targetRevision: main
-      path: airflow_argo/infra
+      path: airflow/infra
     - repoURL: git@github.com:LuisAlfonsoGarciaCamacho/homelab.git
       targetRevision: main
-      path: airflow_argo
+      path: airflow
       helm:
         valueFiles:
           - values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: airflow-argo
+    namespace: airflow
   ignoreDifferences:
     - group: postgresql.cnpg.io
       kind: Cluster
@@ -35,15 +35,15 @@ spec:
         - /spec/selector
         - /spec/template
     - kind: Secret
-      name: airflow-argo-fernet-key
+      name: airflow-fernet-key
       jqPathExpressions:
         - .data
     - kind: Secret
-      name: airflow-argo-jwt-secret
+      name: airflow-jwt-secret
       jqPathExpressions:
         - .data
     - kind: Secret
-      name: airflow-argo-api-secret-key
+      name: airflow-api-secret-key
       jqPathExpressions:
         - .data
   syncPolicy:

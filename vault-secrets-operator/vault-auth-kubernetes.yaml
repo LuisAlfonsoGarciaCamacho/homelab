@@ -14,7 +14,6 @@ spec:
   allowedNamespaces:
     - mlflow
     - airflow
-    - airflow-argo
     - jupyterhub
     - odoo
     - monitoring
