@@ -108,6 +108,15 @@ grafana:
     existingSecret: grafana-admin-from-vault
     userKey: admin-user
     passwordKey: admin-password
+  envValueFrom:
+    GF_SECURITY_ADMIN_USER:
+      secretKeyRef:
+        name: grafana-admin-from-vault
+        key: admin-user
+    GF_SECURITY_ADMIN_PASSWORD:
+      secretKeyRef:
+        name: grafana-admin-from-vault
+        key: admin-password
   resources:
     requests:
       cpu: 250m
