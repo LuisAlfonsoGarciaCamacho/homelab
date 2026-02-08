@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring
   labels:
     app: dcgm-exporter
-    release: prometheus-stack
+    release: monitoring
 spec:
   selector:
     matchLabels:

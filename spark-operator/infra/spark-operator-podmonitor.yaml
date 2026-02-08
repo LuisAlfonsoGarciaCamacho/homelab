@@ -6,7 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: spark-operator
     app.kubernetes.io/component: controller
-    release: prometheus-stack
+    release: monitoring
 spec:
   selector:
     matchLabels:
