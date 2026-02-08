@@ -1,0 +1,9 @@
+apiVersion: v2
+name: jupyterhub-homelab
+description: JupyterHub via official chart (dependency)
+type: application
+version: 0.1.0
+dependencies:
+  - name: jupyterhub
+    repository: https://jupyterhub.github.io/helm-chart
+    version: "3.2.1"

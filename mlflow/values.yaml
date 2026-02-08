@@ -1,105 +1,109 @@
-image:
-  repository: burakince/mlflow
-  tag: ""
-  pullPolicy: IfNotPresent
-replicaCount: 1
-service:
-  enabled: true
-  type: ClusterIP
-  port: 80
-  containerPort: 5000
-  containerPortName: mlflow
-ingress:
-  enabled: false
-backendStore:
-  databaseMigration: true
-  postgres:
+mlflow:
+  image:
+    repository: burakince/mlflow
+    tag: ""
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  service:
     enabled: true
-    host: "mlflow-postgres-rw.mlflow.svc.cluster.local"
-    port: 5432
-    database: "mlflow"
-    user: "mlflow"
-  existingDatabaseSecret:
-    name: mlflow-postgres-credentials
-    usernameKey: "username"
-    passwordKey: "password"
-artifactRoot:
-  gcs:
+    type: ClusterIP
+    port: 80
+    containerPort: 5000
+    containerPortName: mlflow
+  ingress:
     enabled: true
-    bucket: "mlflow-artifacts-mlops-training"
-    path: ""
-extraEnvVars:
-  GOOGLE_APPLICATION_CREDENTIALS: "/etc/gcs/gcs-key.json"
-auth:
-  enabled: true
-  adminUsername: "admin"
-  defaultPermission: "READ"
-  existingAdminSecret:
-    name: mlflow-app-secrets
-    usernameKey: "username"
-    passwordKey: "password"
-extraArgs:
-  host: "0.0.0.0"
-  allowedHosts: "mlflow.rendonindustries.com,*.rendonindustries.com"
-  uvicornOpts: ""
-extraVolumes:
-  - name: gcs-credentials
-    secret:
-      secretName: mlflow-gcs-credentials
-
-# Extra volume mounts
-extraVolumeMounts:
-  - name: gcs-credentials
-    mountPath: /etc/gcs
-    readOnly: true
-resources:
-  requests:
-    memory: "512Mi"
-    cpu: "250m"
-  limits:
-    memory: "1Gi"
-    cpu: "1000m"
-securityContext:
-  runAsNonRoot: true
-  runAsUser: 1001
-  runAsGroup: 1001
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-      - ALL
-
-podSecurityContext:
-  fsGroup: 1001
-  fsGroupChangePolicy: OnRootMismatch
-log:
-  enabled: false
-  level: info
-livenessProbe:
-  initialDelaySeconds: 30
-  periodSeconds: 30
-  timeoutSeconds: 3
-  failureThreshold: 5
-
-readinessProbe:
-  initialDelaySeconds: 10
-  periodSeconds: 30
-  timeoutSeconds: 3
-  failureThreshold: 5
-serviceAccount:
-  create: true
-  name: ""
-podAnnotations: {}
-nodeSelector: {}
-tolerations: []
-affinity:
-  nodeAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-    - weight: 100
-      preference:
-        matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - talos-wil-yn3
-          - talos-u1f-wfa
-
+    className: cloudflare-tunnel
+    annotations:
+      cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
+    hosts:
+      - host: mlflow.rendonindustries.com
+        paths:
+          - path: /
+            pathType: Prefix
+  backendStore:
+    databaseMigration: true
+    postgres:
+      enabled: true
+      host: "mlflow-postgres-rw.mlflow.svc.cluster.local"
+      port: 5432
+      database: "mlflow"
+      user: "mlflow"
+    existingDatabaseSecret:
+      name: mlflow-postgres-credentials
+      usernameKey: "username"
+      passwordKey: "password"
+  artifactRoot:
+    gcs:
+      enabled: true
+      bucket: "mlflow-artifacts-mlops-training"
+      path: ""
+  extraEnvVars:
+    GOOGLE_APPLICATION_CREDENTIALS: "/etc/gcs/gcs-key.json"
+  auth:
+    enabled: true
+    adminUsername: "admin"
+    defaultPermission: "READ"
+    existingAdminSecret:
+      name: mlflow-app-secrets
+      usernameKey: "username"
+      passwordKey: "password"
+  extraArgs:
+    host: "0.0.0.0"
+    allowedHosts: "mlflow.rendonindustries.com,*.rendonindustries.com"
+    uvicornOpts: ""
+  extraVolumes:
+    - name: gcs-credentials
+      secret:
+        secretName: mlflow-gcs-credentials
+  extraVolumeMounts:
+    - name: gcs-credentials
+      mountPath: /etc/gcs
+      readOnly: true
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "1000m"
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+  podSecurityContext:
+    fsGroup: 1001
+    fsGroupChangePolicy: OnRootMismatch
+  log:
+    enabled: false
+    level: info
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    timeoutSeconds: 3
+    failureThreshold: 5
+  readinessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 30
+    timeoutSeconds: 3
+    failureThreshold: 5
+  serviceAccount:
+    create: true
+    name: ""
+  podAnnotations: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          preference:
+            matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - talos-wil-yn3
+                  - talos-u1f-wfa

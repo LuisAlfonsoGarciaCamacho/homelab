@@ -21,3 +21,27 @@ stringData:
   type: helm
   name: gabe565
   url: https://charts.gabe565.com
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helm-community-charts
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: helm
+  name: community-charts
+  url: https://community-charts.github.io/helm-charts
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helm-jupyterhub
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: helm
+  name: jupyterhub
+  url: https://jupyterhub.github.io/helm-chart

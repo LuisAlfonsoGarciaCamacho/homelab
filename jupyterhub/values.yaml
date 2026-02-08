@@ -1,66 +1,72 @@
-hub:
-  config:
-    JupyterHub:
-      authenticator_class: dummy
-  db:
-    type: postgres
-  extraEnv:
-    - name: JUPYTERHUB_DB_URL
-      valueFrom:
-        secretKeyRef:
-          name: jupyterhub-postgres-app
-          key: url
-  resources:
-    requests:
-      memory: 256Mi
-      cpu: 200m
-    limits:
-      memory: 512Mi
-      cpu: 500m
+jupyterhub:
+  hub:
+    config:
+      JupyterHub:
+        authenticator_class: dummy
+    db:
+      type: postgres
+    extraEnv:
+      - name: JUPYTERHUB_DB_URL
+        valueFrom:
+          secretKeyRef:
+            name: jupyterhub-postgres-app
+            key: url
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 200m
+      limits:
+        memory: 512Mi
+        cpu: 500m
 
-proxy:
-  service:
-    type: ClusterIP
+  proxy:
+    service:
+      type: ClusterIP
 
-singleuser:
-  image:
-    name: jupyter/pyspark-notebook
-    tag: latest
-  startTimeout: 600
-  cloudMetadata:
-    blockWithIptables: false
-  storage:
-    type: dynamic
-    extraLabels: {}
-    dynamic:
-      storageClass: longhorn
-    capacity: 10Gi
-    extraVolumes:
-      - name: gcs-credentials
-        secret:
-          secretName: unity-catalog-gcs-credentials
-    extraVolumeMounts:
-      - name: gcs-credentials
-        mountPath: /etc/gcs
-        readOnly: true
+  singleuser:
+    image:
+      name: jupyter/pyspark-notebook
+      tag: latest
+    startTimeout: 600
+    cloudMetadata:
+      blockWithIptables: false
+    storage:
+      type: dynamic
+      extraLabels: {}
+      dynamic:
+        storageClass: longhorn
+      capacity: 10Gi
+      extraVolumes:
+        - name: gcs-credentials
+          secret:
+            secretName: unity-catalog-gcs-credentials
+      extraVolumeMounts:
+        - name: gcs-credentials
+          mountPath: /etc/gcs
+          readOnly: true
+    memory:
+      guarantee: 1G
+      limit: 2G
+    cpu:
+      guarantee: 0.5
+      limit: 2
+    cmd: null
+    extraEnv:
+      GOOGLE_APPLICATION_CREDENTIALS: /etc/gcs/gcs-key.json
 
-  memory:
-    guarantee: 1G
-    limit: 2G
-  cpu:
-    guarantee: 0.5
-    limit: 2
+  ingress:
+    enabled: true
+    className: cloudflare-tunnel
+    annotations:
+      cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
+    hosts:
+      - host: jupyter.rendonindustries.com
+        paths:
+          - path: /
+            pathType: Prefix
 
-  # Enable Spark integration
-  cmd: null
-  extraEnv:
-    GOOGLE_APPLICATION_CREDENTIALS: /etc/gcs/gcs-key.json
-
-ingress:
-  enabled: false
-
-prePuller:
-  hook:
-    enabled: false
-  continuous:
-    enabled: false
+  prePuller:
+    hook:
+      enabled: false
+    continuous:
+      enabled: false

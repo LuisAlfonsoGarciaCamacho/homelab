@@ -49,3 +49,5 @@ INVENTARIO.md
 # Helm dependency build artifacts (Argo CD fetches deps from registered repos)
 jellyfin/charts/
 qbittorrent/charts/
+mlflow/charts/
+jupyterhub/charts/

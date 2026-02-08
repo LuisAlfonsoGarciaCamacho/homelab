@@ -3,10 +3,11 @@ kind: Database
 metadata:
   name: mlflow-database
   namespace: mlflow
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   name: mlflow
   owner: mlflow
   cluster:
     name: mlflow-postgres
   databaseReclaimPolicy: delete
-
