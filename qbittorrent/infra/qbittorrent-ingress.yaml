@@ -5,6 +5,7 @@ metadata:
   namespace: jellyfin
   annotations:
     cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
+    cloudflare-tunnel-ingress-controller.strrl.dev/http-host-header: qbittorrent.rendonindustries.com
 spec:
   ingressClassName: cloudflare-tunnel
   rules:
