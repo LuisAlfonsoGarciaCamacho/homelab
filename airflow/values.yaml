@@ -28,41 +28,22 @@ airflow:
       value: "False"
     - name: AIRFLOW__WEBSERVER__EXPOSE_CONFIG
       value: "True"
-    - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
-      valueFrom:
-        secretKeyRef:
-          name: airflow-postgres-app
-          key: connection
-    - name: AIRFLOW__CORE__FERNET_KEY
-      valueFrom:
-        secretKeyRef:
-          name: airflow-app-secrets
-          key: fernetKey
-    - name: AIRFLOW__API_AUTH__JWT_SECRET
-      valueFrom:
-        secretKeyRef:
-          name: airflow-app-secrets
-          key: jwtSecret
-    - name: AIRFLOW__WEBSERVER__DEFAULT_USER_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: airflow-app-secrets
-          key: defaultUserPassword
+  secret:
+    - envName: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
+      secretName: airflow-postgres-app
+      secretKey: connection
+    - envName: AIRFLOW__CORE__FERNET_KEY
+      secretName: airflow-app-secrets
+      secretKey: fernetKey
+    - envName: AIRFLOW__API_AUTH__JWT_SECRET
+      secretName: airflow-app-secrets
+      secretKey: jwtSecret
+    - envName: AIRFLOW__WEBSERVER__DEFAULT_USER_PASSWORD
+      secretName: airflow-app-secrets
+      secretKey: defaultUserPassword
   data:
-    metadataConnection:
-      user: airflow
-      protocol: postgresql
-      host: airflow-postgres-rw.airflow.svc.cluster.local
-      port: 5432
-      db: airflow
-      sslmode: disable
-    resultBackendConnection:
-      user: airflow
-      protocol: postgresql
-      host: airflow-postgres-rw.airflow.svc.cluster.local
-      port: 5432
-      db: airflow
-      sslmode: disable
+    metadataSecretName: airflow-postgres-app
+    resultBackendSecretName: airflow-postgres-app
   webserver:
     defaultUser:
       enabled: true
