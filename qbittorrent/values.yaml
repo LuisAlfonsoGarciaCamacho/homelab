@@ -28,8 +28,7 @@ qbittorrent:
           protocol: TCP
   ingress:
     main:
-      enabled: true
-      className: cloudflare-tunnel
+      enabled: false
       annotations:
         cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
       hosts:
