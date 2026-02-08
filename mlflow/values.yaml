@@ -5,7 +5,7 @@ mlflow:
     pullPolicy: IfNotPresent
   replicaCount: 1
   podAnnotations:
-    homelab-sync: "1"
+    homelab-sync: "3"
   service:
     enabled: true
     type: ClusterIP
@@ -95,7 +95,6 @@ mlflow:
   serviceAccount:
     create: true
     name: ""
-  podAnnotations: {}
   nodeSelector: {}
   tolerations: []
   affinity:
