@@ -80,7 +80,11 @@ spec:
         - .metadata.resourceVersion
         - .metadata.managedFields
         - .secrets
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      jqPathExpressions:
+        - .metadata.annotations
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-    # Sin automated para evitar sync colgado; sincronizar manualmente desde la UI
+      - ServerSideApply=true
