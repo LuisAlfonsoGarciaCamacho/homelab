@@ -105,7 +105,7 @@ grafana:
     fsGroup: 0
   adminUser: admin
   admin:
-    existingSecret: prometheus-stack-grafana-admin
+    existingSecret: monitoring-grafana
     userKey: admin-user
     passwordKey: admin-password
   resources:
