@@ -56,9 +56,9 @@ jupyterhub:
 
   ingress:
     enabled: true
-    className: cloudflare-tunnel
     annotations:
       cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
+      kubernetes.io/ingress.class: cloudflare-tunnel
     hosts:
       - host: jupyter.rendonindustries.com
         paths:
