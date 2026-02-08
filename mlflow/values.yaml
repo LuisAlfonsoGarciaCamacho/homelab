@@ -4,6 +4,8 @@ mlflow:
     tag: ""
     pullPolicy: IfNotPresent
   replicaCount: 1
+  podAnnotations:
+    homelab-sync: "1"
   service:
     enabled: true
     type: ClusterIP
