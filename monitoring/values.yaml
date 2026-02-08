@@ -83,6 +83,13 @@ alertmanager:
 
 grafana:
   enabled: true
+  lifecycleHooks:
+    postStart:
+      exec:
+        command:
+          - /bin/sh
+          - -c
+          - sleep 30 && [ -n "$$GF_SECURITY_ADMIN_PASSWORD" ] && grafana-cli admin reset-admin-password "$$GF_SECURITY_ADMIN_PASSWORD" 2>/dev/null || true
   ingress:
     enabled: false
   persistence:
