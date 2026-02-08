@@ -1,106 +1,107 @@
-executor: KubernetesExecutor
-postgresql:
-  enabled: false
-images:
-  airflow:
-    repository: apache/airflow
-    pullPolicy: IfNotPresent
-nodeSelector:
-  kubernetes.io/hostname: talos-wil-yn3
-volumes:
-  - name: dags
-    persistentVolumeClaim:
-      claimName: airflow-dags-longhorn
-volumeMounts:
-  - name: dags
-    mountPath: /opt/airflow/dags
-    readOnly: false
-service:
-  type: ClusterIP
-  ports:
-    airflowui: 8080
-ingress:
-  web:
+airflow:
+  executor: KubernetesExecutor
+  postgresql:
     enabled: false
-env:
-  - name: AIRFLOW__CORE__LOAD_EXAMPLES
-    value: "False"
-  - name: AIRFLOW__WEBSERVER__EXPOSE_CONFIG
-    value: "True"
-  - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
-    valueFrom:
-      secretKeyRef:
-        name: airflow-postgres-app
-        key: connection
-  - name: AIRFLOW__CORE__FERNET_KEY
-    valueFrom:
-      secretKeyRef:
-        name: airflow-app-secrets
-        key: fernetKey
-  - name: AIRFLOW__API_AUTH__JWT_SECRET
-    valueFrom:
-      secretKeyRef:
-        name: airflow-app-secrets
-        key: jwtSecret
-  - name: AIRFLOW__WEBSERVER__DEFAULT_USER_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: airflow-app-secrets
-        key: defaultUserPassword
-data:
-  metadataConnection:
-    user: airflow
-    protocol: postgresql
-    host: airflow-postgres-rw.airflow.svc.cluster.local
-    port: 5432
-    db: airflow
-    sslmode: disable
-  resultBackendConnection:
-    user: airflow
-    protocol: postgresql
-    host: airflow-postgres-rw.airflow.svc.cluster.local
-    port: 5432
-    db: airflow
-    sslmode: disable
-webserver:
-  defaultUser:
+  images:
+    airflow:
+      repository: apache/airflow
+      pullPolicy: IfNotPresent
+  nodeSelector:
+    kubernetes.io/hostname: talos-wil-yn3
+  volumes:
+    - name: dags
+      persistentVolumeClaim:
+        claimName: airflow-dags-longhorn
+  volumeMounts:
+    - name: dags
+      mountPath: /opt/airflow/dags
+      readOnly: false
+  service:
+    type: ClusterIP
+    ports:
+      airflowui: 8080
+  ingress:
+    web:
+      enabled: false
+  env:
+    - name: AIRFLOW__CORE__LOAD_EXAMPLES
+      value: "False"
+    - name: AIRFLOW__WEBSERVER__EXPOSE_CONFIG
+      value: "True"
+    - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
+      valueFrom:
+        secretKeyRef:
+          name: airflow-postgres-app
+          key: connection
+    - name: AIRFLOW__CORE__FERNET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: airflow-app-secrets
+          key: fernetKey
+    - name: AIRFLOW__API_AUTH__JWT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: airflow-app-secrets
+          key: jwtSecret
+    - name: AIRFLOW__WEBSERVER__DEFAULT_USER_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: airflow-app-secrets
+          key: defaultUserPassword
+  data:
+    metadataConnection:
+      user: airflow
+      protocol: postgresql
+      host: airflow-postgres-rw.airflow.svc.cluster.local
+      port: 5432
+      db: airflow
+      sslmode: disable
+    resultBackendConnection:
+      user: airflow
+      protocol: postgresql
+      host: airflow-postgres-rw.airflow.svc.cluster.local
+      port: 5432
+      db: airflow
+      sslmode: disable
+  webserver:
+    defaultUser:
+      enabled: true
+      role: Admin
+      username: admin
+      email: admin@rendonindustries.com
+      firstName: Admin
+      lastName: User
+  logs:
+    persistence:
+      enabled: false
+  workers:
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 500m
+      limits:
+        memory: 1Gi
+        cpu: 1000m
+  scheduler:
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 500m
+      limits:
+        memory: 1Gi
+        cpu: 1000m
+  triggerer:
     enabled: true
-    role: Admin
-    username: admin
-    email: admin@rendonindustries.com
-    firstName: Admin
-    lastName: User
-logs:
-  persistence:
-    enabled: false
-workers:
-  resources:
-    requests:
-      memory: 512Mi
-      cpu: 500m
-    limits:
-      memory: 1Gi
-      cpu: 1000m
-scheduler:
-  resources:
-    requests:
-      memory: 512Mi
-      cpu: 500m
-    limits:
-      memory: 1Gi
-      cpu: 1000m
-triggerer:
-  enabled: true
-  persistence:
-    enabled: false
-  resources:
-    requests:
-      memory: 512Mi
-      cpu: 250m
-    limits:
-      memory: 1Gi
-      cpu: 1000m
-  livenessProbe:
-    timeoutSeconds: 30
-    periodSeconds: 60
-    failureThreshold: 5
+    persistence:
+      enabled: false
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 250m
+      limits:
+        memory: 1Gi
+        cpu: 1000m
+    livenessProbe:
+      timeoutSeconds: 30
+      periodSeconds: 60
+      failureThreshold: 5

@@ -1,0 +1,9 @@
+apiVersion: v2
+name: spark-operator-homelab
+description: Spark Operator via Kubeflow chart (dependency)
+type: application
+version: 0.1.0
+dependencies:
+  - name: spark-operator
+    repository: https://kubeflow.github.io/spark-operator
+    version: "2.3.0"

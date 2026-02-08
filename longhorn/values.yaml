@@ -1,0 +1,9 @@
+longhorn:
+  preUpgradeChecker:
+    jobEnabled: false
+
+  csi:
+    snapshotterReplicaCount: 0
+
+  defaultSettings:
+    backupstorePollInterval: "0"

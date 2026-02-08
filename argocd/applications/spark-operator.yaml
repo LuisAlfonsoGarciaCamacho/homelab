@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: spark-operator
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: git@github.com:LuisAlfonsoGarciaCamacho/homelab.git
+      targetRevision: main
+      path: spark-operator/infra
+    - repoURL: git@github.com:LuisAlfonsoGarciaCamacho/homelab.git
+      targetRevision: main
+      path: spark-operator
+      helm:
+        valueFiles:
+          - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: spark-operator
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

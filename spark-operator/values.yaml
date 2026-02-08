@@ -1,26 +1,30 @@
-image:
-  registry: ghcr.io
-  repository: kubeflow/spark-operator/controller
-  tag: 2.4.0
-  pullPolicy: IfNotPresent
+spark-operator:
+  image:
+    registry: ghcr.io
+    repository: kubeflow/spark-operator/controller
+    tag: 2.4.0
+    pullPolicy: IfNotPresent
 
-webhook:
-  enable: true
+  webhook:
+    enable: true
 
-metrics:
-  enable: true
-leaderElection:
-  enable: true
-uiIngress:
-  enable: true
-  urlFormat: "{{$appName}}.rendonindustries.com"
-  ingressClassName: cloudflare-tunnel
-  annotations:
-    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
-resources:
-  requests:
-    cpu: 100m
-    memory: 256Mi
-  limits:
-    cpu: 500m
-    memory: 512Mi
+  metrics:
+    enable: true
+
+  leaderElection:
+    enable: true
+
+  uiIngress:
+    enable: true
+    urlFormat: "{{$appName}}.rendonindustries.com"
+    ingressClassName: cloudflare-tunnel
+    annotations:
+      cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi

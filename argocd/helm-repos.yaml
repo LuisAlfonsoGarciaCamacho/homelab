@@ -45,3 +45,51 @@ stringData:
   type: helm
   name: jupyterhub
   url: https://jupyterhub.github.io/helm-chart
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helm-apache-airflow
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: helm
+  name: apache-airflow
+  url: https://airflow.apache.org
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helm-prometheus-community
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: helm
+  name: prometheus-community
+  url: https://prometheus-community.github.io/helm-charts
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helm-longhorn
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: helm
+  name: longhorn
+  url: https://charts.longhorn.io
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helm-spark-operator
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: helm
+  name: spark-operator
+  url: https://kubeflow.github.io/spark-operator
