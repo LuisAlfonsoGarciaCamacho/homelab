@@ -16,6 +16,7 @@ airflow:
       tag: "3.0.2"
       pullPolicy: IfNotPresent
   defaultAirflowTag: "3.0.2"
+  defaultAirflowRepository: apache/airflow
   nodeSelector:
     kubernetes.io/hostname: talos-wil-yn3
   volumes:
