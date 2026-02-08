@@ -4,7 +4,7 @@ metadata:
   name: airflow-argo-database
   namespace: airflow-argo
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   name: airflow
   owner: airflow

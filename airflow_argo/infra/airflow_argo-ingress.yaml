@@ -4,6 +4,7 @@ metadata:
   name: airflow-argo
   namespace: airflow-argo
   annotations:
+    argocd.argoproj.io/sync-wave: "-1"
     cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
 spec:
   ingressClassName: cloudflare-tunnel
