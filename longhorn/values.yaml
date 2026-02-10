@@ -4,6 +4,9 @@ longhorn:
 
   csi:
     snapshotterReplicaCount: 0
+    attacherReplicaCount: 1
+    provisionerReplicaCount: 1
+    resizerReplicaCount: 1
 
   defaultSettings:
     backupstorePollInterval: "0"
