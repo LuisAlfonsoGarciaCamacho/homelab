@@ -8,5 +8,17 @@ longhorn:
     provisionerReplicaCount: 1
     resizerReplicaCount: 1
 
+  longhornUI:
+    replicas: 1
+
+  longhornConversionWebhook:
+    replicas: 1
+
+  longhornAdmissionWebhook:
+    replicas: 1
+
+  longhornRecoveryBackend:
+    replicas: 1
+
   defaultSettings:
     backupstorePollInterval: "0"
