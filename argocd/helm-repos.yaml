@@ -93,3 +93,15 @@ stringData:
   type: helm
   name: apache-airflow
   url: https://airflow.apache.org
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helm-mojo2600
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: helm
+  name: mojo2600
+  url: https://mojo2600.github.io/pihole-kubernetes/

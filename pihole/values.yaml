@@ -1,0 +1,40 @@
+hostNetwork: "true"
+replicaCount: 2
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - talos-u1f-wfa
+                - talos-iym-r1w
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app: pihole
+        topologyKey: kubernetes.io/hostname
+persistentVolumeClaim:
+  enabled: false
+  size: "500Mi"
+  storageClassName: longhorn
+podDnsConfig:
+  enabled: true
+  policy: "None"
+  nameservers:
+    - 127.0.0.1
+    - 1.1.1.1
+serviceDhcp:
+  enabled: false
+serviceDns:
+  type: ClusterIP
+serviceWeb:
+  type: ClusterIP
+ingress:
+  enabled: false
+admin:
+  enabled: true
+  existingSecret: pihole-admin-from-vault
+  passwordKey: password
