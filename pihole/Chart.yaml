@@ -1,9 +1,0 @@
-apiVersion: v2
-name: pihole-homelab
-description: Pi-hole via mojo2600 chart (dependency)
-type: application
-version: 0.1.0
-dependencies:
-  - name: pihole
-    repository: https://mojo2600.github.io/pihole-kubernetes/
-    version: "2.35.0"

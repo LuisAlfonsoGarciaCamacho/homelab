@@ -19,4 +19,3 @@ spec:
     - monitoring
     - glance
     - argocd
-    - pihole
