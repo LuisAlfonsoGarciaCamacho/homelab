@@ -107,4 +107,4 @@ mlflow:
                 operator: In
                 values:
                   - talos-wil-yn3
-                  - talos-u1f-wfa
+                  - talos-pv5-297

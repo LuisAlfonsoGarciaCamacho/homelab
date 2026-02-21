@@ -20,8 +20,13 @@ spec:
         - key: nvidia.com/gpu
           operator: Exists
           effect: NoSchedule
-      nodeSelector:
-        kubernetes.io/hostname: talos-u1f-wfa
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: nvidia.com/gpu
+                operator: Exists
       priorityClassName: "system-node-critical"
       containers:
       - name: dcgm-exporter

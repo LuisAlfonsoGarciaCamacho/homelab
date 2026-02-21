@@ -17,8 +17,8 @@ spec:
               - key: kubernetes.io/hostname
                 operator: In
                 values:
-                  - talos-u1f-wfa
                   - talos-wil-yn3
+                  - talos-pv5-297
   storage:
     size: 5Gi
     storageClass: longhorn
