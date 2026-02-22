@@ -25,7 +25,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: nvidia.com/gpu
+              - key: extensions.talos.dev/nonfree-kmod-nvidia-production
                 operator: Exists
       priorityClassName: "system-node-critical"
       containers:
