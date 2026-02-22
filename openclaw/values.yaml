@@ -1,6 +1,6 @@
 openclaw:
   app-template:
-    configMode: merge
+    configMode: overwrite
     configMaps:
       config:
         enabled: true
