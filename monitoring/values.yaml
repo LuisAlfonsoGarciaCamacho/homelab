@@ -105,17 +105,17 @@ grafana:
     fsGroup: 0
   adminUser: admin
   admin:
-    existingSecret: monitoring-grafana
+    existingSecret: grafana-vault-admin
     userKey: admin-user
     passwordKey: admin-password
   envValueFrom:
     GF_SECURITY_ADMIN_USER:
       secretKeyRef:
-        name: monitoring-grafana
+        name: grafana-vault-admin
         key: admin-user
     GF_SECURITY_ADMIN_PASSWORD:
       secretKeyRef:
-        name: monitoring-grafana
+        name: grafana-vault-admin
         key: admin-password
   resources:
     requests:
