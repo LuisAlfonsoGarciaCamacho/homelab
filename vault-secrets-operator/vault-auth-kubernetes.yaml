@@ -19,3 +19,4 @@ spec:
     - monitoring
     - glance
     - argocd
+    - openclaw
