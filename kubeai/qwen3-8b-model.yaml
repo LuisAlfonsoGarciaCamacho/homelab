@@ -1,19 +1,19 @@
 apiVersion: kubeai.org/v1
 kind: Model
 metadata:
-  name: mistral-7b-flashcards
+  name: qwen3-8b
   namespace: kubeai
 spec:
   engine: VLLM
   features:
     - TextGeneration
-  url: hf://TrabbyPatty/mistral-7b-instruct-finetuned-flashcards-4bit
+  url: hf://Qwen/Qwen3-8B-AWQ
   cacheProfile: longhorn-cache
   image: vllm/vllm-openai:v0.10.2
-  minReplicas: 0
+  minReplicas: 1
   maxReplicas: 1
   resourceProfile: "nvidia-gpu-a16:1"
   args:
     - --max-model-len=2048
-    - --gpu-memory-utilization=0.7
+    - --gpu-memory-utilization=0.8
     - --max-num-seqs=16
