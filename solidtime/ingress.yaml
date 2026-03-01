@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: solidtime-ingress
+  namespace: solidtime
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: http
+    cloudflare-tunnel-ingress-controller.strrl.dev/http-host-header: solidtime.rendonindustries.com
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+  - host: solidtime.rendonindustries.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: solidtime
+            port:
+              number: 8000

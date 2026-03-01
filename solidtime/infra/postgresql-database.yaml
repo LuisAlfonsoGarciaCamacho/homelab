@@ -1,0 +1,13 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: solidtime-database
+  namespace: solidtime
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  name: solidtime
+  owner: solidtime
+  cluster:
+    name: solidtime-postgres
+  databaseReclaimPolicy: delete

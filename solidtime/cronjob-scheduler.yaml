@@ -1,0 +1,62 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: solidtime-scheduler
+  namespace: solidtime
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  schedule: "* * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: scheduler
+            image: solidtime/solidtime:main
+            command:
+            - php
+            - artisan
+            - schedule:run
+            env:
+            - name: CONTAINER_MODE
+              value: scheduler
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: solidtime-postgres-credentials
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: solidtime-postgres-credentials
+                  key: password
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: solidtime-app-secrets
+                  key: APP_KEY
+            - name: PASSPORT_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: solidtime-app-secrets
+                  key: PASSPORT_PRIVATE_KEY
+            - name: PASSPORT_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: solidtime-app-secrets
+                  key: PASSPORT_PUBLIC_KEY
+            envFrom:
+            - configMapRef:
+                name: solidtime-config
+            resources:
+              requests:
+                memory: "128Mi"
+                cpu: "50m"
+              limits:
+                memory: "256Mi"
+                cpu: "200m"

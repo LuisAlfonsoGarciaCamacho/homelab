@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: solidtime
+  namespace: solidtime
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  selector:
+    app: solidtime
+    component: app
+  ports:
+  - port: 8000
+    targetPort: 8000
+    name: http

@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solidtime-app
+  namespace: solidtime
+  labels:
+    app: solidtime
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: solidtime
+      component: app
+  template:
+    metadata:
+      labels:
+        app: solidtime
+        component: app
+    spec:
+      containers:
+      - name: app
+        image: solidtime/solidtime:0.11.5
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: CONTAINER_MODE
+          value: http
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: solidtime-postgres-credentials
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: solidtime-postgres-credentials
+              key: password
+        - name: APP_KEY
+          valueFrom:
+            secretKeyRef:
+              name: solidtime-app-secrets
+              key: APP_KEY
+        - name: PASSPORT_PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: solidtime-app-secrets
+              key: PASSPORT_PRIVATE_KEY
+        - name: PASSPORT_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: solidtime-app-secrets
+              key: PASSPORT_PUBLIC_KEY
+        envFrom:
+        - configMapRef:
+            name: solidtime-config
+        volumeMounts:
+        - name: storage
+          mountPath: /var/www/html/storage
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: solidtime-storage-longhorn

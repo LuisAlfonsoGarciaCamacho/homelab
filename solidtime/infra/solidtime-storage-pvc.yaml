@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: solidtime-storage-longhorn
+  namespace: solidtime
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 5Gi
