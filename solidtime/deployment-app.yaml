@@ -27,10 +27,14 @@ spec:
         command:
         - sh
         - -c
-        - mkdir -p /var/www/html/storage/framework/cache /var/www/html/storage/framework/views /var/www/html/storage/framework/sessions /var/www/html/storage/logs && chown -R 33:33 /var/www/html/storage && chmod -R 775 /var/www/html/storage
+        - mkdir -p /var/www/html/storage/framework/cache /var/www/html/storage/framework/views /var/www/html/storage/framework/sessions /var/www/html/storage/logs /var/www/html/storage/app && chown -R 1000:1000 /var/www/html/storage && chmod -R 775 /var/www/html/storage
         volumeMounts:
         - name: storage
           mountPath: /var/www/html/storage
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       containers:
       - name: app
         image: solidtime/solidtime:0.11.5

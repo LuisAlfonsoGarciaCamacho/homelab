@@ -15,13 +15,32 @@ spec:
       template:
         spec:
           restartPolicy: OnFailure
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+          initContainers:
+          - name: storage-init
+            image: busybox:1.36
+            securityContext:
+              runAsUser: 0
+            command:
+            - sh
+            - -c
+            - mkdir -p /var/www/html/storage/framework/cache /var/www/html/storage/framework/views /var/www/html/storage/framework/sessions /var/www/html/storage/logs /var/www/html/storage/app && chown -R 1000:1000 /var/www/html/storage && chmod -R 775 /var/www/html/storage
+            volumeMounts:
+            - name: storage
+              mountPath: /var/www/html/storage
           containers:
           - name: scheduler
-            image: solidtime/solidtime:main
+            image: solidtime/solidtime:0.11.5
             command:
             - php
             - artisan
             - schedule:run
+            volumeMounts:
+            - name: storage
+              mountPath: /var/www/html/storage
             env:
             - name: CONTAINER_MODE
               value: scheduler
@@ -60,3 +79,7 @@ spec:
               limits:
                 memory: "256Mi"
                 cpu: "200m"
+          volumes:
+          - name: storage
+            persistentVolumeClaim:
+              claimName: solidtime-storage-longhorn
