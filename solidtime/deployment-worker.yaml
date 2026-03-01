@@ -19,12 +19,24 @@ spec:
         app: solidtime
         component: worker
     spec:
+      initContainers:
+      - name: storage-init
+        image: solidtime/solidtime:0.11.5
+        command:
+        - sh
+        - -c
+        - mkdir -p /var/www/html/storage/framework/cache /var/www/html/storage/framework/views /var/www/html/storage/framework/sessions /var/www/html/storage/logs && chmod -R 775 /var/www/html/storage
+        volumeMounts:
+        - name: storage
+          mountPath: /var/www/html/storage
       containers:
       - name: worker
-        image: solidtime/solidtime:main
+        image: solidtime/solidtime:0.11.5
         env:
         - name: CONTAINER_MODE
           value: worker
+        - name: WORKER_COMMAND
+          value: "php /var/www/html/artisan queue:work"
         - name: DB_USERNAME
           valueFrom:
             secretKeyRef:
