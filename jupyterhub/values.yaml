@@ -36,6 +36,16 @@ jupyterhub:
     startTimeout: 600
     cloudMetadata:
       blockWithIptables: false
+    extraVolumes:
+      - name: gcs-uc
+        secret:
+          secretName: unitycatalog-gcs-credentials
+    extraVolumeMounts:
+      - name: gcs-uc
+        mountPath: /etc/gcs-uc
+        readOnly: true
+    extraEnv:
+      GOOGLE_APPLICATION_CREDENTIALS: "/etc/gcs-uc/jsonKey"
     storage:
       type: dynamic
       extraLabels: {}
