@@ -59,6 +59,12 @@ airflow:
   data:
     metadataSecretName: airflow-postgres-app
     resultBackendSecretName: airflow-postgres-app
+  apiServer:
+    startupProbe:
+      initialDelaySeconds: 90
+      periodSeconds: 10
+      timeoutSeconds: 10
+      failureThreshold: 24
   webserver:
     defaultUser:
       enabled: true
@@ -79,6 +85,11 @@ airflow:
         memory: 1Gi
         cpu: 1000m
   scheduler:
+    startupProbe:
+      initialDelaySeconds: 90
+      periodSeconds: 10
+      timeoutSeconds: 60
+      failureThreshold: 20
     resources:
       requests:
         memory: 512Mi
