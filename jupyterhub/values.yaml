@@ -36,14 +36,6 @@ jupyterhub:
       dynamic:
         storageClass: longhorn
       capacity: 10Gi
-      extraVolumes:
-        - name: gcs-credentials
-          secret:
-            secretName: unity-catalog-gcs-credentials
-      extraVolumeMounts:
-        - name: gcs-credentials
-          mountPath: /etc/gcs
-          readOnly: true
     memory:
       guarantee: 1G
       limit: 2G
@@ -51,8 +43,6 @@ jupyterhub:
       guarantee: 0.5
       limit: 2
     cmd: null
-    extraEnv:
-      GOOGLE_APPLICATION_CREDENTIALS: /etc/gcs/gcs-key.json
 
   ingress:
     enabled: true
