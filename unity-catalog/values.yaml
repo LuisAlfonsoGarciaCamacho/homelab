@@ -30,7 +30,7 @@ unitycatalog:
   ui:
     enabled: true
     proxyApiRequests: true
-    serverUrl: http://unitycatalog.unity-catalog.svc.cluster.local:8080
+    serverUrl: http://unitycatalog-server.unity-catalog.svc.cluster.local:8080
     service:
       type: ClusterIP
 
