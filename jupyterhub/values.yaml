@@ -1,5 +1,11 @@
 jupyterhub:
   hub:
+    readinessProbe:
+      initialDelaySeconds: 120
+      periodSeconds: 5
+      failureThreshold: 60
+    livenessProbe:
+      initialDelaySeconds: 180
     config:
       JupyterHub:
         authenticator_class: dummy
@@ -51,6 +57,10 @@ jupyterhub:
       kubernetes.io/ingress.class: cloudflare-tunnel
     hosts:
       - jupyter.rendonindustries.com
+
+  scheduling:
+    userScheduler:
+      replicas: 1
 
   prePuller:
     hook:
