@@ -6,6 +6,9 @@ unitycatalog:
 
   server:
     enabled: true
+    config:
+      extraProperties:
+        gcs.jsonKeyFilePath.0: "/home/unitycatalog/etc/conf/gcs-credentials-0.json"
     db:
       type: postgresql
       postgresqlConfig:
