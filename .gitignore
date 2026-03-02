@@ -22,6 +22,8 @@ talos-cluster/
 model_example/
 nvidia/
 mlflow_bucket/
+unitycatalog_bucket/
+unity-catalog/SPARK_UC.md
 
 # Cursor rules (local only, do not sync with repo)
 .cursor/
@@ -51,3 +53,4 @@ jellyfin/charts/
 qbittorrent/charts/
 mlflow/charts/
 jupyterhub/charts/
+unity-catalog/charts/

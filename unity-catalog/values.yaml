@@ -1,0 +1,38 @@
+unitycatalog:
+  fullnameOverride: unitycatalog
+
+  ingress:
+    enabled: false
+
+  server:
+    enabled: true
+    db:
+      type: postgresql
+      postgresqlConfig:
+        host: unity-catalog-postgres-rw.unity-catalog.svc.cluster.local
+        port: 5432
+        dbName: ucdb
+        username: unitycatalog
+        passwordSecretName: unity-catalog-postgres-app
+        passwordSecretKey: password
+    service:
+      type: ClusterIP
+      port: 8080
+    deployment:
+      replicaCount: 1
+
+  storage:
+    credentials:
+      gcs:
+        - bucketPath: gs://unity-catalog-data-mlops-training
+          credentialsSecretName: unitycatalog-gcs-credentials
+
+  ui:
+    enabled: true
+    proxyApiRequests: true
+    serverUrl: http://unitycatalog.unity-catalog.svc.cluster.local:8080
+    service:
+      type: ClusterIP
+
+  auth:
+    enabled: false

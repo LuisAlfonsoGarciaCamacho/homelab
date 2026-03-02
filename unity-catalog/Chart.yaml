@@ -1,0 +1,9 @@
+apiVersion: v2
+name: unity-catalog-homelab
+description: Unity Catalog via sdwbgn/unitycatalog-helm (dependency)
+type: application
+version: 0.1.0
+dependencies:
+  - name: unitycatalog
+    repository: oci://ghcr.io/sdwbgn/unitycatalog-helm
+    version: "0.0.2"

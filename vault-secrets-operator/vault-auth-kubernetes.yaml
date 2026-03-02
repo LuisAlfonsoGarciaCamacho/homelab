@@ -20,3 +20,4 @@ spec:
     - glance
     - argocd
     - solidtime
+    - unity-catalog
