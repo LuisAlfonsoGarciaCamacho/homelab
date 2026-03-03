@@ -19,10 +19,10 @@ jupyterhub:
             key: url
     resources:
       requests:
-        memory: 256Mi
+        memory: 512Mi
         cpu: 200m
       limits:
-        memory: 512Mi
+        memory: 1Gi
         cpu: 500m
 
   proxy:
@@ -53,11 +53,11 @@ jupyterhub:
     extraEnv:
       GOOGLE_APPLICATION_CREDENTIALS: "/etc/gcs-uc/jsonKey"
     memory:
-      guarantee: 1G
-      limit: 2G
+      guarantee: 4G
+      limit: 8G
     cpu:
-      guarantee: 0.5
-      limit: 2
+      guarantee: 2
+      limit: 4
     cmd: null
 
   ingress:
