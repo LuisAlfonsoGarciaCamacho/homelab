@@ -14,6 +14,9 @@ spark-operator:
   leaderElection:
     enable: true
 
+  uiService:
+    enable: true
+
   uiIngress:
     enable: true
     urlFormat: "{{$appName}}.rendonindustries.com"

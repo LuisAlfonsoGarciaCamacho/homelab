@@ -81,17 +81,7 @@ data:
 
             - type: videos
               channels:
-                - UCR-DXc1voovS8nhAvccRZhg # Jeff Geerling
                 - UCsBjURrPoezykLs9EqgamOA # Fireship
-                - UCobqgqE4i5Kf7wrxRxhToQA # Coffe bean AI
-                - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
-                - UCeLvlbC754U6FyFQbKc0UnQ # Anton Putra
-                - UChHd6081N_U8O4KmNawF-5A # Stoib
-                - UCbx_d228PdYwgB4Jz202SIQ # Gentleman Programming 
-                - UCSf6S_PAhXsqGMTPDiKgdRg # BettaTech
-                - UCrBzBOMcUVV8ryyAU_c6P5g # Pelado Nerd
-                - UC9x0AN7BWHpCDHSm9NiJFJQ # NetworkChuck
-                - UCdngmbVKX1Tgre699-XLlUA # TechWorld with Nana
 
             - type: group
               widgets:
