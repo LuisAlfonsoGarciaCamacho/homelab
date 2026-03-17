@@ -20,7 +20,7 @@ spec:
             - containerPort: 8000
           env:
             - name: WORKSPACE_URI
-              value: "gs://evidently-workspace-bucket/workspace"
+              value: "gs://evidently-workspace-mlops-training/workspace"
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/secrets/gcp-key.json"
           envFrom:
