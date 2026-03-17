@@ -23,6 +23,7 @@ model_example/
 nvidia/
 mlflow_bucket/
 unitycatalog_bucket/
+evidently_bucket/
 unity-catalog/SPARK_UC.md
 unity-catalog/UC_TOKEN_AND_TABLE.md
 

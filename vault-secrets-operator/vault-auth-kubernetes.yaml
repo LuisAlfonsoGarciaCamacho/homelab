@@ -1,4 +1,3 @@
-# VaultAuth Kubernetes. Prereqs: enable kubernetes auth in Vault, create policy + role; see VAULT-SECRETS-SETUP.md
 apiVersion: secrets.hashicorp.com/v1beta1
 kind: VaultAuth
 metadata:
@@ -13,6 +12,7 @@ spec:
     serviceAccount: default
   allowedNamespaces:
     - mlflow
+    - evidently
     - airflow
     - jupyterhub
     - odoo

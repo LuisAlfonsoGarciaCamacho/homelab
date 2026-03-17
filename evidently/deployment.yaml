@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evidently-ui
+  namespace: evidently
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: evidently-ui
+  template:
+    metadata:
+      labels:
+        app: evidently-ui
+    spec:
+      containers:
+        - name: evidently-ui
+          image: overfitz/evidently-ui-gcs:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: WORKSPACE_URI
+              value: "gs://evidently-workspace-bucket/workspace"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/secrets/gcp-key.json"
+          envFrom:
+            - secretRef:
+                name: evidently-app-secrets
+          volumeMounts:
+            - name: gcp-key
+              mountPath: /secrets
+              readOnly: true
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: 1
+              memory: 2Gi
+      volumes:
+        - name: gcp-key
+          secret:
+            secretName: evidently-gcs-credentials
+            items:
+              - key: gcp-key.json
+                path: gcp-key.json
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: evidently-ui
+  namespace: evidently
+spec:
+  selector:
+    app: evidently-ui
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP

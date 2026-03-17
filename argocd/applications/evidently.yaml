@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: evidently
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: git@github.com:LuisAlfonsoGarciaCamacho/homelab.git
+      targetRevision: main
+      path: evidently/infra
+    - repoURL: git@github.com:LuisAlfonsoGarciaCamacho/homelab.git
+      targetRevision: main
+      path: evidently
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: evidently
+  ignoreDifferences:
+    - group: postgresql.cnpg.io
+      kind: Cluster
+      jsonPointers:
+        - /status
+        - /spec
+    - group: postgresql.cnpg.io
+      kind: Cluster
+      jqPathExpressions:
+        - .metadata.resourceVersion
+        - .metadata.managedFields
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

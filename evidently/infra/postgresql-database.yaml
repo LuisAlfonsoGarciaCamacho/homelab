@@ -1,0 +1,13 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: evidently-database
+  namespace: evidently
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  name: evidently
+  owner: evidently
+  cluster:
+    name: evidently-postgres
+  databaseReclaimPolicy: delete
